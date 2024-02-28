@@ -1,0 +1,56 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+
+  color-scheme: light dark;
+}
+
+html, body {
+  color: #000000;
+  background: #FFFFFF;
+}
+
+.resume-wrapper {
+  display: flex;
+  max-width: 900px;
+  min-height: 100vh;
+}
+
+.resume-wrapper > .resume--primary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 256px;
+  padding: 16px;
+  color: #FFFFFF;
+  background: #6495ED;
+}
+
+.resume-wrapper > .resume--primary > article:not(:has(.resume_photo)) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 16px 0 12px;
+}
+
+.resume-wrapper > .resume--primary > article > main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resume-wrapper > .resume--primary .resume_photo {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 16px;
+  border-radius: 50vh;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.resume-wrapper > .resume--secondary {
+  flex: 1;
+  padding: 16px;
+  background: #F8F8F8;
+}
