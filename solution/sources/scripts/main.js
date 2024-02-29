@@ -60,7 +60,7 @@ class ResumeBuilder {
   }
 
   setPersonalDescription (personalDescription) {
-    this.resume.personalDescription = personalDescription
+    this.resume.personalDescription = personalDescription.target.value
   }
 
   addJob () {
@@ -96,6 +96,13 @@ class ResumeBuilder {
     console.log(this.resume)
   }
 }
+
+// function editCurrentResume() {
+//   window.localStorage.setItem('collection', JSON.stringify({
+//     resume_id: new URLSearchParams(window.location.search).get('resume_id')
+//   }))
+//   console.log(JSON.parse(window.localStorage.collection))
+// }
 
 const resume = new ResumeBuilder()
 
