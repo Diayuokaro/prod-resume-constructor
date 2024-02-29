@@ -16,8 +16,8 @@ class ResumeBuilder {
   setPhoto (event) {
     const file = document.querySelector('input[type=file]').files[0]
 
-    let reader = new FileReader()
-    reader.addEventListener('load', () => {
+    const reader = new FileReader()
+    reader.addEventListener('load', (event) => {
       this.resume.photo = reader.result
     })
 
@@ -31,7 +31,7 @@ class ResumeBuilder {
   }
 
   setBirthdate (event) {
-    this.resume.birthdate = Date(event.target.value)
+    this.resume.birthdate = new Date(event.target.value)
   }
 
   setResidence (event) {
@@ -98,26 +98,6 @@ class ResumeBuilder {
 }
 
 const resume = new ResumeBuilder()
-
-function editCurrentResume() {
-  window.localStorage.setItem('collection', JSON.stringify({
-    resume_id: new URLSearchParams(window.location.search).get('resume_id')
-  }))
-  console.log(JSON.parse(window.localStorage.collection))
-}
-
-function imageUploaded() {
-  const file = document.querySelector('input[type=file]').files[0]
-
-  let reader = new FileReader()
-  reader.addEventListener('load', () => {
-    resume.setPhoto(reader.result)
-  })
-
-  if (file) {
-    reader.readAsDataURL(file)
-  }
-}
 
 document.addEventListener('DOMContentLoaded', (event) => {
   // const collection = [
