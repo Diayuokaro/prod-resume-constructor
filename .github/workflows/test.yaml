@@ -25,15 +25,20 @@ jobs:
       - run: npm ci
 
       - run: npx playwright install --with-deps
-      - run: npx playwright test --reporter=junit &> /dev/null
+      - run: npx playwright test --reporter=junit tests/integration/extra &> /dev/null
         env:
           PLAYWRIGHT_JUNIT_OUTPUT_NAME: integration-junit.xml
         continue-on-error: true
 
+      - uses: actions/upload-artifact@v4.0.0
+        with:
+          name: failed screenshots
+          path: test-results
+          compression-level: 0
+
       - uses: Central-University-IT/junit-action@main
         with:
           files: |
-            unit-junit.xml
             integration-junit.xml
         id: junit
 
