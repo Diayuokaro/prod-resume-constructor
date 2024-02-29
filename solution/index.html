@@ -2,100 +2,143 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Конструктор резюме</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Резюме</title>
     <link rel="stylesheet" href="/sources/styles/reset.css">
     <link rel="stylesheet" href="/sources/styles/index.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="/sources/scripts/main.js"></script>
   </head>
   <body>
-    <template name="items">
-      <div class="items">
-      </div>
-    </template>
-    <template name="resume">
-      <div class="resume-wrapper">
-        <section class="resume--primary">
-          <article>
-            <img class="resume_photo" src="/sources/pictures/photo.jpg">
-          </article>
-          <article>
-            <h2>Личные данные</h2>
-            <hr>
-            <main>
-              <article>
-                <h3>ФИО</h3>
-                <p>Данилов Дмитрий Евгеньевич</p>
-              </article>
-            </main>
-          </article>
-          <article>
-            <h2>Интересы</h2>
-            <hr>
-            <main>
-              <article>
-                <h3>Хороший лидер</h3>
-              </article>
-            </main>
-          </article>
-          <article>
-            <h2>Языки</h2>
-            <hr>
-            <main>
-              <article>
-                <h3>Английский</h3>
-                <p>C1</p>
-              </article>
-            </main>
-          </article>
-        </section>
-        <section class="resume--secondary">
-          <article>
-            <h1>Данилов Дмитрий Евгеньевич</h1>
-            <hr>
-            <p>В целом достаточно сильный разработчик, я бы даже сказал умный, вообще умен не по годам.<br>Подниму ваш проект, удалю все легаси, и все коммиты будут маленькими по 15 строк кода.</p>
-          </article>
-          <article>
-            <h2>Опыт работы</h2>
-            <hr>
-            <div>
-              <div>
-                <h3>C++ разработчик</h3>
-                <p>сентябрь 2020 г. — наст. время</p>
-              </div>
-              <p>ООО Рога и Копыта, Москва</p>
-              <p>Писал компилятор под js, который позволял ускорить билд приложений.</p>
-            </div>
-          </article>
-          <article>
-            <h2>Образование и квалификация</h2>
-            <hr>
-            <div>
-              <div>
-                <h3>Магистратура</h3>
-                <p>сентябрь 2020 г. — наст. время</p>
-              </div>
-              <p>ЦУ Москва</p>
-              <p>Дизайн и разработка ПО</p>
-            </div>
-          </article>
-          <article>
-            <h2>Курсы</h2>
-            <hr>
-            <div>
-              <div>
-                <h3>Школа промышленной разработки</h3>
-                <p>январь 2021 г. — май 2021 г.</p>
-              </div>
-              <p>Известная компания</p>
-            </div>
-          </article>
-        </section>
-      </div>
-    </template>
-    <template name="builder">
-      <div class="builder" test-id="resume-builder">
-      </div>
-    </template>
+    <form test-id="resume-builder">
+      <fieldset>
+        <legend>Личные данные</legend>
+        <p>
+          <input type="file" name="photo" onchange="resume.setPhoto(event)">
+          <label for="photo">Фотография</label>
+        </p>
+        <p>
+          <input type="text" name="fullname" onchange="resume.setFullname(event)" test-id="personal-info">
+          <label for="fullname">ФИО</label>
+        </p>
+        <p>
+          <input type="date" name="birthdate" onchange="resume.setBirthdate(event)" test-id="personal-info">
+          <label for="birthdate">Дата рождения</label>
+        </p>
+        <p>
+          <input type="text" name="residence" onchange="resume.setResidence(event)" test-id="personal-info">
+          <label for="residence">Город</label>
+        </p>
+        <p>
+          <input type="tel" name="phone" onchange="resume.setPhone(event)" test-id="personal-info">
+          <label for="phone">Номер телефона</label>
+        </p>
+        <p>
+          <input type="email" name="email" onchange="resume.setEmail(event)" test-id="personal-info">
+          <label for="email">Email</label>
+        </p>
+      </fieldset>
+      <fieldset>
+        <legend>Интересы</legend>
+        <p>
+          <input type="text" name="interest" test-id="interest">
+          <label for="interest">Интерес</label>
+        </p>
+        <input type="button" value="Добавить" name="addLanguage" onclick="resume.addInterest()" test-id="add-interest">
+        <input type="button" value="Удалить" name="removeLanguage" test-id="remove-interest">
+      </fieldset>
+      <fieldset>
+        <legend>Языки</legend>
+        <p>
+          <input type="text" name="languageName" test-id="language-name">
+          <label for="languageName">Язык</label>
+        </p>
+        <p>
+          <input type="text" name="languageLevel" test-id="language-level">
+          <label for="languageLevel">Уровень</label>
+        </p>
+        <input type="button" value="Добавить" name="addLanguage" onclick="resume.addLanguage()" test-id="add-language">
+        <input type="button" value="Удалить" name="removeLanguage" test-id="remove-language">
+      </fieldset>
+      <fieldset>
+        <legend>Интервью</legend>
+        <p>
+          <textarea name="personalDescription" onchange="resume.setPersonalDescription(event)" test-id="personal-description"></textarea>
+          <label for="personalDescription">Описание</label>
+        </p>
+      </fieldset>
+      <fieldset>
+        <legend>Опыт работы</legend>
+        <p>
+          <input type="text" name="jobTitle" test-id="job-title">
+          <label for="jobTitle">Должность</label>
+        </p>
+        <p>
+          <input type="date" name="jobDateStart" test-id="job-date-start">
+          <label for="jobDateStart">Дата начала</label>
+        </p>
+        <p>
+          <input type="date" name="jobDateEnd" test-id="job-date-end">
+          <label for="jobDateEnd">Дата окончания</label>
+        </p>
+        <p>
+          <input type="text" name="jobPlace" test-id="job-place">
+          <label for="jobPlace">Место</label>
+        </p>
+        <p>
+          <textarea name="jobDescription" test-id="job-description"></textarea>
+          <label for="jobDescription">Описание</label>
+        </p>
+        <input type="button" value="Добавить" name="addJob" onclick="resume.addJob()" test-id="add-job">
+        <input type="button" value="Удалить" name="removeJob" test-id="remove-job">
+      </fieldset>
+      <fieldset>
+        <legend>Образование и квалификация</legend>
+        <p>
+          <input type="text" name="educationTitle" test-id="education-title">
+          <label for="educationTitle">Высшее образование</label>
+        </p>
+        <p>
+          <input type="date" name="educationDateStart" test-id="education-date-start">
+          <label for="educationDateStart">Дата начала</label>
+        </p>
+        <p>
+          <input type="date" name="educationDateEnd" test-id="education-date-end">
+          <label for="educationDateEnd">Дата окончания</label>
+        </p>
+        <p>
+          <input type="text" name="educationPlace" test-id="education-place">
+          <label for="educationPlace">Место</label>
+        </p>
+        <p>
+          <textarea name="educationDescription" test-id="education-description"></textarea>
+          <label for="educationDescription">Описание</label>
+        </p>
+        <input type="button" value="Добавить" name="addEducation" onclick="resume.addEducation()" test-id="add-education">
+        <input type="button" value="Удалить" name="removeEducation" test-id="remove-education">
+      </fieldset>
+      <fieldset>
+        <legend>Курсы</legend>
+        <p>
+          <input type="text" name="courseTitle" test-id="course-title">
+          <label for="courseTitle">Названия курса</label>
+        </p>
+        <p>
+          <input type="date" name="courseDateStart" test-id="course-date-start">
+          <label for="courseDateStart">Дата начала</label>
+        </p>
+        <p>
+          <input type="date" name="courseDateEnd" test-id="course-date-end">
+          <label for="courseDateEnd">Дата окончания</label>
+        </p>
+        <p>
+          <input type="text" name="coursePlace" test-id="course-place">
+          <label for="coursePlace">Авторы</label>
+        </p>
+        <input type="button" value="Добавить" name="addCourse" onclick="resume.addCourse()" test-id="add-course">
+        <input type="button" value="Удалить" name="removeCourse" test-id="remove-course">
+      </fieldset>
+      <input type="button" value="Просмотр резюме" name="generateResume" onclick="resume.getResume()" test-id="generate-resume">
+    </form>
   </body>
 </html>
