@@ -75,3 +75,39 @@ test('Проверка наличия кнопки "Действия" (score: 0)
   const title = await actionButton.nth(0).getAttribute('title');
   expect(title).toBe('Действия');
 });
+
+test('Проверка навигации на редактирование и сохранение готового резюме со страницы /all (score: 0)', async ({page}) => {
+  await createResume(page, 'Александр Сергей Юрий');
+  await createResume(page, 'Дмитрий Степан Михаил');
+  await page.goto('/all');
+
+  const actionButton = await page.getByTestId('resume-actions').last();
+  await actionButton.click();
+
+  const openButton = await page.getByTestId('resume-actions__open').last();
+  await openButton.click();
+
+  const backButton = await page.getByTestId('back-button');
+  await expect(backButton).toBeVisible();
+  await backButton.click();
+
+  const nameInput = await page.getByTestId("personal-info").nth(0);
+  await expect(nameInput).toBeVisible();
+  await nameInput.fill('Данилов Дмитрий Евгеньевич');
+
+  const generateResumeButton = await page.getByTestId("generate-resume");
+  await expect(generateResumeButton).toBeVisible();
+  await expect(generateResumeButton).toBeEnabled();
+  await generateResumeButton.click();
+  await expect(generateResumeButton).toBeHidden();
+
+  const saveButton = await page.getByTestId('save-button');
+  await expect(saveButton).toBeVisible();
+  await saveButton.click();
+
+  await expect(saveButton).toBeHidden();
+  await expect(backButton).toBeHidden();
+
+  const title = await page.getByText("Мои резюме");
+  await expect(title).toBeVisible();
+});
