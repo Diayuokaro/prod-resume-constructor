@@ -3,15 +3,106 @@
   font-weight: 400;
 
   color-scheme: light /* dark */;
-  scrollbar-gutter: stable;
+  /* scrollbar-gutter: stable; */
   overflow-x: hidden;
 }
 
-html, body {
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+}
+
+.resume-builder {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 448px;
+  margin: 96px auto;
+  padding: 0 24px;
+}
+
+.resume-builder div {
+  display: flex;
+  gap: 24px;
+}
+
+.resume-builder label {
   display: flex;
   flex-direction: column;
   justify-content: stretch;
-  align-items: center;
+  gap: 6px;
   width: 100%;
-  min-height: 100vh;
+}
+
+.resume-builder div > label,
+.resume-builder div > input {
+  flex: 1;
+  width: auto;
+}
+
+.resume-builder label span {
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.resume-builder input,
+.resume-builder textarea {
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #A0A0A0;
+  font-size: 16px;
+}
+
+.resume-builder input[type="button"] {
+  background: #F0F0F0;
+  border: none;
+  cursor: pointer;
+}
+
+.resume-builder ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resume-builder ul:empty {
+  display: none;
+}
+
+.resume-builder ul li:not(:last-child) {
+  padding-bottom: 6px;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.resume-builder textarea {
+  resize: vertical;
+}
+
+.resume-builder fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 0;
+  padding-top: 16px;
+  border: none;
+}
+
+.resume-builder fieldset legend {
+  padding: 0;
+  font-size: 20px;
+  font-weight: 600;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.resume-builder__title {
+  font-size: 24px;
+  user-select: none;
+  -webkit-user-drag: none;
 }

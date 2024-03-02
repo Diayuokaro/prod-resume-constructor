@@ -4,24 +4,25 @@
 
   overflow-x: hidden;
   color-scheme: light /* dark */;
-  scrollbar-gutter: stable;
+  /* scrollbar-gutter: stable; */
+  overflow-x: hidden;
 }
 
-html, body {
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  align-items: center;
-  width: 100%;
-  min-height: 100vh;
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
 
 .collection {
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
   gap: 48px;
-  padding: 120px 0;
+  max-width: 948px;
+  margin: 120px auto;
+  padding: 0 24px;
 }
 
 .collection__title {
@@ -31,17 +32,23 @@ html, body {
 
 .collection > main {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, min(250px));
   gap: 32px 24px;
-  max-width: 900px;
 }
 
 .collection_card-wrapper {
+  position: relative;
+  width: fit-content;
   color: #000000;
   text-decoration: none;
   border-radius: 12px;
+  cursor: pointer;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+.collection_card-wrapper:focus {
+  cursor: default;
 }
 
 .collection_card {
@@ -58,12 +65,25 @@ html, body {
   overflow: hidden;
   pointer-events: none;
   transition: 200ms all ease;
+  z-index: 0;
 }
 
+.collection_card-wrapper:focus .collection_card,
 .collection_card-wrapper:hover .collection_card {
   border: 1px solid #D0D0D0D0;
   box-shadow: 0 12px 48px -6px #20202020;
   transform: translateY(-4px);
+}
+
+.collection_card.add-plug .icon {
+  margin: auto;
+  color: #D0D0D0;
+  font-size: 64px;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 300,
+  'GRAD' 0,
+  'opsz' 24;
 }
 
 .collection_card > section:not(:has(.collection_card__photo)) {
@@ -79,8 +99,48 @@ html, body {
   width: 160px;
   height: 160px;
   border-radius: 50vh;
+  box-shadow: 0 8px 24px -4px #20202040;
+  object-fit: cover;
+  object-position: center;
 }
 
 .collection_card__extra {
   color: #606060;
+}
+
+.collection_card_options {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  padding: 6px;
+  background: #FFFFFF;
+  border: 1px solid #D0D0D0;
+  border-radius: 12px;
+  transform: translateY(4px);
+  filter: blur(2px);
+  transition: 300ms all ease;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.collection_card-wrapper:focus .collection_card_options,
+.collection_card_options:hover {
+  opacity: 1;
+  transform: translateY(-4px);
+  filter: blur(0);
+  pointer-events: all;
+}
+
+.collection_card_options__button {
+  width: 100%;
+  padding: 10px 20px;
+  color: #000000;
+  background: #F0F0F0;
+  border-radius: 6px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 }
