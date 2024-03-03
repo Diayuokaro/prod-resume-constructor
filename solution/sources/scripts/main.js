@@ -367,7 +367,7 @@ class Resume {
       </section>`
     })
 
-    this.reference.jobs.forEach((job) => {
+    this.reference.jobs.sort(comparator).forEach((job) => {
       document.getElementById('resumeJobs').innerHTML += `<section class="resume_field">
         <header>
           <h5 class="resume_field__title">${ job.jobTitle }</h5>
@@ -380,7 +380,7 @@ class Resume {
       </section>`
     })
 
-    this.reference.educations.forEach((education) => {
+    this.reference.educations.sort(comparator).forEach((education) => {
       document.getElementById('resumeEducations').innerHTML += `<section class="resume_field">
         <header>
           <h5 class="resume_field__title">${ education.educationTitle }</h5>
@@ -393,7 +393,7 @@ class Resume {
       </section>`
     })
 
-    this.reference.courses.forEach((course) => {
+    this.reference.courses.sort(comparator).forEach((course) => {
       document.getElementById('resumeCourse').innerHTML += `<section class="resume_field">
         <header>
           <h5 class="resume_field__title">${ course.courseTitle }</h5>
@@ -460,6 +460,14 @@ function formatDateString(dateString) {
   return `${ months[date.getMonth()] } ${ date.getFullYear() } г.`
 }
 
+function comparator(a, b) {
+  if ((a?.jobDateStart || a?.educationDateStart || a?.courseDateStart) == '' && (b?.jobDateStart || b?.educationDateStart || b?.courseDateStart) == '') return 0
+  if ((a?.jobDateStart || a?.educationDateStart || a?.courseDateStart) == '' && (b?.jobDateStart || b?.educationDateStart || b?.courseDateStart) != '') return 1
+  if ((b?.jobDateStart || b?.educationDateStart || b?.courseDateStart) == '') return -1
+
+  return new Date((b?.jobDateStart || b?.educationDateStart || b?.courseDateStart)).getTime() - new Date((a?.jobDateStart || a?.educationDateStart || a?.courseDateStart)).getTime()
+}
+
 const resume = new Resume(new URLSearchParams(window.location.search).get('resume_id'), new URLSearchParams(window.location.search).get('copy_fields')?.split(','))
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -510,7 +518,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('languages').appendChild(node)
   })
 
-  resume.reference.jobs?.forEach((job) => {
+  resume.reference.jobs?.sort(comparator).forEach((job) => {
     const node = document.createElement('LI')
     node.innerHTML = `<label>
       <span>Должность</span>
@@ -538,7 +546,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('jobs').appendChild(node)
   })
 
-  resume.reference.educations?.forEach((education) => {
+  resume.reference.educations?.sort(comparator).forEach((education) => {
     const node = document.createElement('LI')
     node.innerHTML = `<label>
       <span>Высшее образование</span>
@@ -566,7 +574,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('educations').appendChild(node)
   })
 
-  resume.reference.courses?.forEach((course) => {
+  resume.reference.courses?.sort(comparator).forEach((course) => {
     const node = document.createElement('LI')
     node.innerHTML = `<label>
       <span>Название курса</span>
