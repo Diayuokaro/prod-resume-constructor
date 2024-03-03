@@ -281,7 +281,7 @@ class Resume {
       <article class="resume_group">
         <img class="resume__photo" src="${ this.reference.photo || '/sources/pictures/photo.jpg' }">
       </article>
-      <article class="resume_group" id="personal" test-id="resume-main-section">
+      <article class="resume_group resume_group--personals" id="personal" test-id="resume-main-section">
         <h4 class="resume_group__title">Личные данные</h4>
         <hr>
         <section class="resume_field">
@@ -314,34 +314,94 @@ class Resume {
         }
       </article>
       ${
-        !this.reference.interests.length ? '' : `<article class="resume_group" id="resumeInterests">
-          <h2 class="resume_group__title">Интересы</h2>
+        !this.reference.interests.length ? '' : `<article class="resume_group resume_group--interests" id="resumeInterests" test-id="resume-main-section">
+          <h4 class="resume_group__title">Интересы</h4>
           <hr>
         </article>`
       }
       ${
-        !this.reference.languages.length ? '' : `<article class="resume_group resume_group--languages" id="resumeLanguages">
-          <h2 class="resume_group__title">Языки</h2>
+        !this.reference.languages.length ? '' : `<article class="resume_group resume_group--languages" id="resumeLanguages" test-id="resume-main-section">
+          <h4 class="resume_group__title">Языки</h4>
           <hr>
         </article>`
       }
     </div>
     <div class="resume--secondary">
-      <article>
-        <h1>${ this.reference.fullname }</h1>
+      <article class="resume_group resume_group--interview" id="resumeInterview" test-id="resume-main-section">
+        <h1 class="resume_group__title">${ this.reference.fullname }</h1>
+        <hr>
+        <section class="resume_field">
+          <p class="resume_field__extra">${ this.reference.personalDescription }</p>
+        </section>
       </article>
+      ${
+        !this.reference.jobs.length ? '' : `<article class="resume_group resume_group--jobs" id="resumeJobs" test-id="resume-main-section">
+          <h4 class="resume_group__title">Опыт работы</h4>
+          <hr>
+        </article>`
+      }
+      ${
+        !this.reference.educations.length ? '' : `<article class="resume_group resume_group--educations" id="resumeEducations" test-id="resume-main-section">
+          <h4 class="resume_group__title">Образование и квалификация</h4>
+          <hr>
+        </article>`
+      }
+      ${
+        !this.reference.courses.length ? '' : `<article class="resume_group resume_group--courses" id="resumeCourse" test-id="resume-main-section">
+          <h4 class="resume_group__title">Курсы</h4>
+          <hr>
+        </article>`
+      }
     </div>`
 
     this.reference.interests.forEach((interest) => {
       document.getElementById('resumeInterests').innerHTML += `<section class="resume_field">
-        <h3 class="resume_field__title">${ interest.interest }</h3>
+        <p class="resume_field__title">${ interest.interest }</p>
       </section>`
     })
 
     this.reference.languages.forEach((language) => {
       document.getElementById('resumeLanguages').innerHTML += `<section class="resume_field">
-        <h3 class="resume_field__title">${ language.languageName }</h3>
+        <h5 class="resume_field__title">${ language.languageName }</h5>
         <p class="resume_field__extra">${ language.languageLevel }</p>
+      </section>`
+    })
+
+    this.reference.jobs.forEach((job) => {
+      document.getElementById('resumeJobs').innerHTML += `<section class="resume_field">
+        <header>
+          <h5 class="resume_field__title">${ job.jobTitle }</h5>
+          <p style="display: ${ !Boolean(job.jobDateStart) && Boolean(job.jobDateEnd) ? 'none' : 'hidden' };" class="resume_field__date">${ Boolean(job.jobDateStart) ? formatDateString(job.jobDateStart) + ' — ' : '' }${ formatDateString(job.jobDateEnd) }</p>
+        </header>
+        <aside>
+          <p class="resume_field__place">${ job.jobPlace }</p>
+        </aside>
+        <p class="resume_field__extra">${ job.jobDescription }</p>
+      </section>`
+    })
+
+    this.reference.educations.forEach((education) => {
+      document.getElementById('resumeEducations').innerHTML += `<section class="resume_field">
+        <header>
+          <h5 class="resume_field__title">${ education.educationTitle }</h5>
+          <p style="display: ${ !Boolean(education.educationDateStart) && Boolean(education.educationDateEnd) ? 'none' : 'hidden' };" class="resume_field__date">${ Boolean(education.educationDateStart) ? formatDateString(education.educationDateStart) + ' — ' : '' }${ formatDateString(education.educationDateEnd) }</p>
+        </header>
+        <aside>
+          <p class="resume_field__place">${ education.educationPlace }</p>
+        </aside>
+        <p class="resume_field__extra">${ education.educationDescription }</p>
+      </section>`
+    })
+
+    this.reference.courses.forEach((course) => {
+      document.getElementById('resumeCourse').innerHTML += `<section class="resume_field">
+        <header>
+          <h5 class="resume_field__title">${ course.courseTitle }</h5>
+          <p style="display: ${ !Boolean(course.courseDateStart) && Boolean(course.courseDateEnd) ? 'none' : 'hidden' };" class="resume_field__date">${ Boolean(course.courseDateStart) ? formatDateString(course.courseDateStart) + ' — ' : '' }${ formatDateString(course.courseDateEnd) }</p>
+        </header>
+        <aside>
+          <p class="resume_field__place">${ course.coursePlace }</p>
+        </aside>
       </section>`
     })
 
@@ -355,14 +415,20 @@ class Resume {
   }
 
   saveResume () {
-    if (!JSON.parse(window.localStorage.getItem('collection'))?.filter((resume) => resume.id === this.reference.id).length) {
-      window.localStorage.setItem('collection', JSON.stringify([
-        ...JSON.parse(window.localStorage.getItem('collection')),
-        this.reference,
-      ]))
-    }
+    if (JSON.parse(window.localStorage.getItem('collection'))?.filter((resume) => resume.id === this.reference.id).length) this.removeResume()
 
-    document.getElementById('resumeActions').style.display = 'none'
+    window.localStorage.setItem('collection', JSON.stringify([
+      ...JSON.parse(window.localStorage.getItem('collection')),
+      this.reference,
+    ]))
+
+    window.location.href = '/all'
+  }
+
+  removeResume () {
+    const collection = JSON.parse(window.localStorage.getItem('collection'))
+    collection.splice(JSON.parse(window.localStorage.getItem('collection'))?.findIndex((resume) => resume.id === this.reference.id), 1)
+    window.localStorage.setItem('collection', JSON.stringify(collection))
   }
 }
 
@@ -370,6 +436,28 @@ function formatDate(dateString) {
   const date = new Date(dateString)
 
   return `${ ('00' + date.getDate()).slice(-2) }.${ ('00' + (date.getMonth() + 1)).slice(-2) }.${ date.getFullYear() }`
+}
+
+function formatDateString(dateString) {
+  if (!Boolean(dateString)) return 'наст. время'
+
+  const date = new Date(dateString)
+  const months = [
+    'январь',
+    'февраль',
+    'март',
+    'апрель',
+    'май',
+    'июнь',
+    'июль',
+    'август',
+    'сентябрь',
+    'октябрь',
+    'ноябрь',
+    'декабрь',
+  ]
+
+  return `${ months[date.getMonth()] } ${ date.getFullYear() } г.`
 }
 
 const resume = new Resume(new URLSearchParams(window.location.search).get('resume_id'), new URLSearchParams(window.location.search).get('copy_fields')?.split(','))
@@ -396,7 +484,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   document.getElementsByName('email')[0].value = resume.reference.email || ''
   document.getElementsByName('personalDescription')[0].value = resume.reference.personalDescription || ''
 
-  resume.reference.interests.forEach((interest) => {
+  resume.reference.interests?.forEach((interest) => {
     const node = document.createElement('LI')
     node.innerHTML = `<label>
       <span>Название</span>
@@ -406,7 +494,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('interests').appendChild(node)
   })
 
-  resume.reference.languages.forEach((language) => {
+  resume.reference.languages?.forEach((language) => {
     const node = document.createElement('LI')
     node.innerHTML = `<div>
       <label>
@@ -422,7 +510,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('languages').appendChild(node)
   })
 
-  resume.reference.jobs.forEach((job) => {
+  resume.reference.jobs?.forEach((job) => {
     const node = document.createElement('LI')
     node.innerHTML = `<label>
       <span>Должность</span>
@@ -450,7 +538,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('jobs').appendChild(node)
   })
 
-  resume.reference.educations.forEach((education) => {
+  resume.reference.educations?.forEach((education) => {
     const node = document.createElement('LI')
     node.innerHTML = `<label>
       <span>Высшее образование</span>
@@ -478,7 +566,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('educations').appendChild(node)
   })
 
-  resume.reference.courses.forEach((course) => {
+  resume.reference.courses?.forEach((course) => {
     const node = document.createElement('LI')
     node.innerHTML = `<label>
       <span>Название курса</span>
@@ -504,7 +592,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   if (resumeId && !copyFields?.length) {
     resume.generateResume()
-    document.getElementById('resumeActions').style.display = 'none'
   }
 
   resume.validate()

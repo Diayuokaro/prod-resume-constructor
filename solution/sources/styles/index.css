@@ -116,7 +116,7 @@
 .resume-wrapper {
   display: flex;
   align-items: stretch;
-  width: 900px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -136,36 +136,76 @@
 .resume--primary .resume_group:has(.resume__photo) {
   width: fit-content;
   margin: 0 auto;
+  margin-bottom: 12px;
 }
 
 .resume--primary .resume_group:not(:first-child) {
-  margin-top: 16px;
   padding-bottom: 12px;
 }
 
-.resume--primary .resume_group__title {
-  padding: 13px 0;
+.resume--primary .resume_group--personals {
+  padding-bottom: 10px;
 }
 
-.resume--primary .resume_field {
-  padding-top: 9px;
+.resume--primary .resume_group--personals .resume_field:not(:last-child) {
+  margin-bottom: 14px;
 }
 
-.resume--primary .resume_field:nth-child(3) {
-  padding-top: 18px;
+.resume--primary .resume_group--personals .resume_field__title {
+  font-size: 13.3px;
+  font-weight: 700;
+  line-height: 16.32px;
 }
 
-/* .resume--primary .resume_field__title {
-  width: fit-content;
-} */
-
-.resume--primary .resume_field__extra {
+.resume--primary .resume_group--personals .resume_field__extra {
   font-size: 12.5px;
+  font-weight: 400;
   line-height: 15.84px;
 }
 
+.resume--primary .resume_group--interests {
+  padding-bottom: 9px;
+}
+
+.resume--primary .resume_group--interests .resume_field {
+  margin-top: 1px;
+}
+
+.resume--primary .resume_group--languages {
+  padding-bottom: 5px;
+}
+
 .resume--primary .resume_group--languages .resume_field {
-  width: 100%;
+  margin-top: -7px;
+}
+
+.resume--primary .resume_field:not(:last-child) {
+  margin-bottom: 11px;
+}
+
+.resume--primary .resume_field:last-child > *:last-child {
+  margin-bottom: 0;
+}
+
+.resume--primary .resume_group__title {
+  padding: 14.5px 0;
+}
+
+.resume--primary .resume_group .resume_field:nth-child(3) {
+  padding-top: 13px;
+}
+
+.resume--primary .resume_group .resume_field__title {
+  font-size: 13.3px;
+  font-weight: 700;
+  line-height: 16.32px;
+}
+
+.resume--primary .resume_field:nth-child(3) {
+  padding-top: 2px;
+}
+
+.resume--primary .resume_group--languages .resume_field {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -182,6 +222,7 @@
 .resume--secondary {
   flex: 1;
   padding: 16px;
+  padding-top: 0;
   background: #F8F8F8;
 }
 
@@ -189,4 +230,77 @@
   height: 1px;
   background: #D3D3D3;
   border: none;
+}
+
+.resume--secondary .resume_group {
+  margin-bottom: -3.5px;
+}
+
+.resume--secondary .resume_group__title {
+  padding: 15px 0;
+  font-size: 15.9px;
+  font-weight: 700;
+  line-height: 19.2px;
+}
+
+.resume--secondary .resume_group--interview .resume_group__title {
+  padding: 27px 0;
+  font-size: 27.9px;
+  font-weight: 700;
+  line-height: 33.6px;
+}
+
+.resume--secondary .resume_group--interview .resume_field__extra {
+  padding: 14px 0 11px;
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 15.84px;
+}
+
+.resume--secondary .resume_field > header {
+  display: flex;
+  align-items: center;
+}
+
+.resume--secondary :not(.resume_group--interview) .resume_field {
+  padding-top: 20px;
+}
+
+.resume--secondary .resume_field > header .resume_field__title {
+  flex: 1;
+  font-size: 13.3px;
+  font-weight: 700;
+  line-height: 16.32px;
+}
+
+.resume--secondary .resume_field > header .resume_field__date {
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 15.84px;
+}
+
+.resume--secondary .resume_field__place {
+  margin-bottom: 16.5px;
+  font-size: 13.5px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 16.32px;
+}
+
+.resume--secondary .resume_field__extra {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.84px;
+}
+
+.resume--secondary .resume_group--jobs {
+  padding-bottom: 22px;
+}
+
+.resume--secondary .resume_group--educations {
+  padding-bottom: 23px;
+}
+
+.resume--secondary .resume_group--courses .resume_field__place {
+  margin-bottom: -1.5px;
 }

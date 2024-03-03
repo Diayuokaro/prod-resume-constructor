@@ -87,8 +87,8 @@ function refreshItems() {
         </div>
         <div class="collection_card_options">
           <div>
-            <a href="/?resume_id=${ resume.id }" class="collection_card_options__button">Открыть</a>
-            <a class="collection_card_options__button" onclick="removeResume('${ resume.id }')">Удалить</a>
+            <a href="/?resume_id=${ resume.id }" class="collection_card_options__button" test-id="resume-actions__open">Открыть</a>
+            <a class="collection_card_options__button" onclick="removeResume('${ resume.id }')" test-id="resume-actions__delete">Удалить</a>
           </div>
           <a class="collection_card_options__button" onclick="showCopyModal('${ resume.id }')" test-id="resume-actions__copy">Копировать</a>
         </div>
