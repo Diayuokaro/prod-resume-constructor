@@ -23,7 +23,7 @@ jobs:
       - run: npm ci
 
       - run: npx playwright install --with-deps
-      - run: npx playwright test --reporter=junit tests/integration/functional
+      - run: npx playwright test --reporter=junit tests/integration/screenshots
         env:
           PLAYWRIGHT_JUNIT_OUTPUT_NAME: integration-junit.xml
         continue-on-error: true
