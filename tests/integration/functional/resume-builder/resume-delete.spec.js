@@ -129,7 +129,7 @@ async function selectResumeByName(page, resumeToDelete) {
 
   // ищем резюме по названию, чтобы тест не падал, если участник не сделал правильную сортировку
   for (let i = 0; i < count; i++) {
-    if (await resumeTitles.nth(i).textContent() === resumeToDelete) {
+    if ((await resumeTitles.nth(i).textContent()).trim() === resumeToDelete) {
       const resumeCheckbox = await page.getByTestId('resume-checkbox').nth(i);
       await expect(resumeCheckbox).toBeVisible();
       await resumeCheckbox.click();
@@ -138,7 +138,7 @@ async function selectResumeByName(page, resumeToDelete) {
   }
 
   // в списке вообще нет резюме, которое мы хотели удалить
-  await test.fail();
+  throw 'Resume not found';
 }
 
 test('Продвинутый тест на удаление резюме, переход в оставшееся и возврат в список (score: 8)', async ({page}) => {
@@ -172,7 +172,7 @@ async function compareResumeList(resumeTitles, expectedResumeTitles) {
 
   const resumes = [];
   for (let i = 0; i < expectedResumeTitles.length; i++) {
-    resumes.push(await resumeTitles.nth(i).textContent());
+    resumes.push((await resumeTitles.nth(i).textContent()).trim());
   }
 
   expect(resumes).toEqual(expect.arrayContaining(expectedResumeTitles));

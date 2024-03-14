@@ -6,7 +6,7 @@ export async function openByName(page, resumeName) {
 
   // ищем резюме по названию, чтобы тест не падал, если участник не сделал правильную сортировку
   for (let i = 0; i < count; i++) {
-    if (await resumeTitles.nth(i).textContent() === resumeName) {
+    if ((await resumeTitles.nth(i).textContent()).trim() === resumeName) {
       const actionButtons = await page.getByTestId('resume-actions').nth(i);
       await actionButtons.click();
 
@@ -17,5 +17,5 @@ export async function openByName(page, resumeName) {
   }
 
   // в списке нет такого резюме
-  await test.fail();
+  throw 'Resume not found';
 }

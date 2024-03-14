@@ -40,7 +40,8 @@ test.describe('Генерация резюме без интересов', () =>
     await generateResume(page);
     await checkPreviewVisible(page);
 
-    await expect(page.getByText('Интересы', {exact: true})).toBeHidden();
+    const interests = await getInterestsBlock(page);
+    expect(interests).toBeNull();
   });
 });
 
